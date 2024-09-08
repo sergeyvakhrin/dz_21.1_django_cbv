@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 
 from catalog.models import Contact, Product
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 
 class ProductListView(ListView):
@@ -15,6 +15,11 @@ class ProductListView(ListView):
 class ProductCreateView(CreateView):
     model = Product
     fields = ("product_name", "product_description", "product_image", "category", "price")
+    success_url = reverse_lazy('catalog:product_list'),
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ("product_name", "product_description", "product_image", "category", "price")
     success_url = reverse_lazy('catalog:product_list')
 
 class ProductDetailView(DetailView):
@@ -23,6 +28,8 @@ class ProductDetailView(DetailView):
 #     product = get_object_or_404(Product, pk=pk)
 #     context = {'product': product}
 #     return render(request, 'product_detail.html', context)
+
+
 
 class ContactListView(ListView):
     model = Contact
