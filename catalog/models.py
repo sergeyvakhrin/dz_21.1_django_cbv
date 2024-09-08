@@ -91,3 +91,4 @@ class Contact(models.Model):
         verbose_name = "Контакт"
         verbose_name_plural = "Контакты"
         ordering = ("name",)
+
