@@ -1,4 +1,4 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 
 from blog.models import Blog
@@ -30,15 +30,17 @@ class BlogCreateView(CreateView):
 class BlogUpdateView(UpdateView):
     model = Blog
     fields = ("title", "post", "image")
-    success_url = reverse_lazy('blog:blog_list')
+    # success_url = reverse_lazy('blog:blog_list')
 
     def form_valid(self, form):
         if form.is_valid():
             new_post = form.save()
             new_post.slug = slugify(new_post.title)
             new_post.save()
-
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('blog:blog_detail', args=[self.kwargs.get('pk')])
 
 class BlogDeleteView(DeleteView):
     model = Blog
