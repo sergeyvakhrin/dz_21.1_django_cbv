@@ -14,9 +14,9 @@
                         <p class="card-text">{{ blogs.post | slice:":100"}}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a class="btn btn-primary" href="{% url 'blog:blog_detail' blogs.pk %}" role="button">Посмотреть</a>
-                                <a class="btn btn-primary" href="{% url 'blog:blog_update' blogs.pk %}" role="button">Изменить</a>
-                                <a class="btn btn-primary" href="{% url 'blog:blog_delete' blogs.pk %}" role="button">Удалить</a>
+                                <a class="btn btn-primary" href="{% url 'blog:blog_detail' blogs.slug %}" role="button">Посмотреть</a>
+                                <a class="btn btn-primary" href="{% url 'blog:blog_update' blogs.slug %}" role="button">Изменить</a>
+                                <a class="btn btn-primary" href="{% url 'blog:blog_delete' blogs.slug %}" role="button">Удалить</a>
                             </div>
 
                         </div>
