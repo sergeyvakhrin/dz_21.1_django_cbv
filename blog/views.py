@@ -4,6 +4,8 @@ from pytils.translit import slugify
 from blog.models import Blog
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from blog.services import send_post_email
+
 
 class BlogListView(ListView):
     model = Blog
@@ -53,5 +55,8 @@ class BlogDetailView(DetailView):
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
+        if self.object.views_count >= 10:
+            obj = self.object
+            send_post_email(obj)
         return self.object
 
