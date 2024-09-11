@@ -19,7 +19,7 @@ class BlogListView(ListView):
 class BlogCreateView(CreateView):
     model = Blog
     fields = ("title", "post", "image",)
-    success_url = reverse_lazy('blog:blog_list')
+    success_url = reverse_lazy('blog:blog_list',)
 
     def form_valid(self, form):
         if form.is_valid():
@@ -55,8 +55,8 @@ class BlogDetailView(DetailView):
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
-        if self.object.views_count >= 10:
-            obj = self.object
-            send_post_email(obj)
+        # if self.object.views_count >= 100:
+        #     obj = self.object
+        #     send_post_email(obj)
         return self.object
 
