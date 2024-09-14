@@ -1,3 +1,5 @@
+import datetime
+
 from django.urls import reverse_lazy, reverse
 from pytils.translit import slugify
 
@@ -23,9 +25,9 @@ class BlogCreateView(CreateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            new_post = form.save()
-            new_post.slug = slugify(new_post.title)
-            new_post.save()
+            self.object = form.save()
+            self.object.slug = f'{slugify(self.object.title)} {datetime.datetime.now()}'
+            self.object.save()
 
         return super().form_valid(form)
 
@@ -36,13 +38,14 @@ class BlogUpdateView(UpdateView):
 
     def form_valid(self, form):
         if form.is_valid():
-            new_post = form.save()
-            new_post.slug = slugify(new_post.title)
-            new_post.save()
+            self.object = form.save()
+            self.object.slug = f'{slugify(self.object.title)} {datetime.datetime.now()}'
+            self.object.save()
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('blog:blog_detail', args=[self.kwargs.get('pk')])
+        # return reverse('blog:blog_detail', args=[self.kwargs.get('slug')])
+        return reverse('blog:blog_detail', args=[self.object.slug])
 
 class BlogDeleteView(DeleteView):
     model = Blog
@@ -55,8 +58,8 @@ class BlogDetailView(DetailView):
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
-        # if self.object.views_count >= 100:
-        #     obj = self.object
-        #     send_post_email(obj)
+        if self.object.views_count >= 20:
+            obj = self.object
+            send_post_email(obj)
         return self.object
 
