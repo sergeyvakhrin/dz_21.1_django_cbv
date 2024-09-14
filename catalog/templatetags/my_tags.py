@@ -7,5 +7,5 @@ register = template.Library()
 def media_filter(path):
     if path:
         return f'/media/{path}'
-    return '#'
+    return '/media/3.jpg' # необходимо указать путь к картинке вместо '#' иначе будут двойные get запросы
 

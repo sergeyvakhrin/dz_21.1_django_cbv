@@ -1,12 +1,16 @@
 {% extends 'catalog/home.html' %}
 {% load my_tags %}
 {% block content %}
+
+
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <div class="col">
                 <div class="card shadow-sm">
-                    <img src="{{ product.product_image | media_filter }}">
+                    {% if blog.image %}
+                    <img src="{{ blog.image | media_filter }}" class="card-img-top" alt="{{ blog.name }}">
+                    {% endif %}
                     <div class="card-body">
                         <p class="card-text">Название: {{ object.title }} ({{ object.slug }})</p>
                         <p class="card-text">Содержание: {{ object.post }}</p>
